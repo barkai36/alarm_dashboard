@@ -1,0 +1,28 @@
+<form version="1.1" refresh="3" script="alarm_dashboard.js">
+  <label>Alarm_Dashboard</label>
+  <fieldset submitButton="false">
+    <input type="checkbox" token="play_sound">
+      <label>Play Sound</label>
+      <choice value="play">Play</choice>
+      <initialValue>play</initialValue>
+      <delimiter> </delimiter>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Number of new incidents</title>
+      <table>
+        <search id="alarm_search">
+          <query>| makeresults |eval a=random()%10 | eval result=if(a&gt;5,"Alarm","Quiet")</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <format type="color" field="result">
+          <colorPalette type="map">{"Quiet":#118832,"Alarm":#D41F1F}</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+</form>

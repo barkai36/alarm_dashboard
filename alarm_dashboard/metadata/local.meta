@@ -1,0 +1,14 @@
+[app/ui]
+version = 9.0.2
+modtime = 1687898457.311390000
+
+[app/launcher]
+version = 9.0.2
+modtime = 1687898457.316353000
+
+[views/alarm_dashboard]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 9.0.2
+modtime = 1687960612.789327000
