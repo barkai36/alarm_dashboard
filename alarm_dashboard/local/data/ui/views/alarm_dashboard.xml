@@ -1,5 +1,8 @@
-<form version="1.1" refresh="3" script="alarm_dashboard.js">
+<form version="1.1" refresh="10" script="alarm_dashboard.js">
   <label>Alarm_Dashboard</label>
+  <init>
+    <unset token="start_sound"></unset>
+    <unset token="form.start_sound"></unset>form.</init>
   <fieldset submitButton="false">
     <input type="checkbox" token="play_sound">
       <label>Play Sound</label>
@@ -11,11 +14,16 @@
   <row>
     <panel>
       <title>Number of new incidents</title>
-      <table>
+      <input type="link" token="start_sound">
+        <label>Start alerting sound</label>
+        <choice value="*">Start</choice>
+      </input>
+      <table depends="$start_sound$">
         <search id="alarm_search">
-          <query>| makeresults |eval a=random()%10 | eval result=if(a&gt;5,"Alarm","Quiet")</query>
-          <earliest>-24h@h</earliest>
-          <latest>now</latest>
+          <query>index=* $start_sound$ | head 500000 | stats count | eval _time=now() | eval result=if(true() OR a&gt;5,"Alarm","Quiet")
+```| makeresults |eval a=random()%10 | eval result=if(a&gt;5,"Alarm","Quiet")```</query>
+          <earliest>0</earliest>
+          <latest></latest>
         </search>
         <option name="drilldown">none</option>
         <option name="refresh.display">progressbar</option>
